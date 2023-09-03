@@ -21,4 +21,8 @@ export class BackendService {
   sitHttpPost(balance: number): Observable<any> {
     return this._http.post(`${this.baseUrl}/${this.sitEndpoint}`, balance)
   }
+
+  dealHttpPost() {
+    
+  }
 }
