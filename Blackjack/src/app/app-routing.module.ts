@@ -1,7 +1,22 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { AppComponent } from './app.component';
+import { HomeComponent } from './components/home/home.component';
+import { TableComponent } from './components/table/table.component';
+import { NotFoundComponent } from "./components/not-found/not-found.component";
 
-const routes: Routes = [];
+
+export const routes = [
+  {
+    path: '',
+    component: HomeComponent
+  },
+  {
+    path: 'table',
+    component: TableComponent
+  },
+  { path: '**', component: NotFoundComponent }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
