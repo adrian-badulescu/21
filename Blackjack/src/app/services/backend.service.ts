@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class BackendService {
-  baseUrl: string = 'https://blackjack.fuzz.me.uk';
+  baseUrl: string = 'http://127.0.0.1:3000/api';
   sitEndpoint: string  = 'sit'
   dealEndpoint: string  = 'deal'
   turnEndpoint: string  = 'turn'
@@ -19,7 +19,9 @@ export class BackendService {
   }
 
   sitHttpPost(balance: number): Observable<any> {
-    return this._http.post(`${this.baseUrl}/${this.sitEndpoint}`, balance)
+    console.log(balance);
+    
+    return this._http.post(`${this.baseUrl}/${this.sitEndpoint}`, {"balance": balance})
   }
 
   dealHttpPost() {

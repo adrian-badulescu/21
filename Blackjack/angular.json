@@ -64,7 +64,7 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Blackjack:build:production"
+              "browserTarget": "Blackjack:build:production"              
             },
             "development": {
               "browserTarget": "Blackjack:build:development"
