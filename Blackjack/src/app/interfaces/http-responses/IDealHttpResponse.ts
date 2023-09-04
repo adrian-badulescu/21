@@ -1,12 +1,12 @@
 export interface IDealHttpResponse {
-    dealerCards: ICards;
-    playerCards: ICards;
+    dealerCards: ICards[];
+    playerCards: ICards[];
     roundEnded: boolean;
     winAmount: number;
     currentBalance: number;
 }
 
-interface ICards {
+export interface ICards {
     rank: string;
     suite: string;
 }

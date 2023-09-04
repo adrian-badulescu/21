@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IDealHttpResponse } from 'src/app/interfaces/http-responses/IDealHttpResponse';
 import { PlayerService } from 'src/app/services/player.service';
 
 @Component({
@@ -15,6 +16,7 @@ export class TableComponent implements OnInit {
     sessionId: string =  '';
     newRound: boolean = false;
     canStand: boolean = false;
+    dealResponse: IDealHttpResponse = {dealerCards: [], playerCards: [], roundEnded: false, winAmount: 0, currentBalance: this.balance}
 
 
   constructor(private _playerService: PlayerService) {
@@ -28,7 +30,9 @@ export class TableComponent implements OnInit {
   }
 
   deal(bet: number) {    
-    this._playerService.deal({bet, sessionId: this.sessionId, balance: this.balance})
+    this._playerService.deal({bet, sessionId: this.sessionId});
+    this._playerService.dealResponse$
+    .subscribe(res => this.dealResponse = res);
   }
 
   ngOnInit(): void {

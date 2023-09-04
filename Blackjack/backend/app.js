@@ -34,7 +34,37 @@ app.post("/api/sit", cors(corsOptions), (request, response) => {
 
 app.post("/api/deal", cors(corsOptions), (request, response) => {
     console.log(request.body)   
-    let innerRequest = fetch(`${baseUrl}/${endpointSit}`, {
+    let innerRequest = fetch(`${baseUrl}/${endpointDeal}`, {
+        method: "post",
+        body: JSON.stringify(request.body),
+        headers: { "Content-Type": "application/json" }
+    })
+        .then(res => res.json())        
+        .catch(err => console.log(err))
+
+    innerRequest
+    .then(res => response.send(res))
+    .catch(err => response.send(err))  
+});
+
+app.post("/api/turn", cors(corsOptions), (request, response) => {
+    console.log(request.body)   
+    let innerRequest = fetch(`${baseUrl}/${endpointTurn}`, {
+        method: "post",
+        body: JSON.stringify(request.body),
+        headers: { "Content-Type": "application/json" }
+    })
+        .then(res => res.json())        
+        .catch(err => console.log(err))
+
+    innerRequest
+    .then(res => response.send(res))
+    .catch(err => response.send(err))  
+});
+
+app.post("/api/stand", cors(corsOptions), (request, response) => {
+    console.log(request.body)   
+    let innerRequest = fetch(`${baseUrl}/${endpointStand}`, {
         method: "post",
         body: JSON.stringify(request.body),
         headers: { "Content-Type": "application/json" }
