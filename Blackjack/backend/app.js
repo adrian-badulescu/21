@@ -1,41 +1,29 @@
 const express = require("express");
-const request = require('request');
-const { createProxyMiddleware, responseInterceptor, fixRequestBody } = require('http-proxy-middleware');
-// var request = require('request');
-var bodyParser = require('body-parser')
-var cors = require('cors')
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const app = express();
-
-app.use(cors())
-
-var corsOptions = {
-    origin: '*',
-    optionsSuccessStatus: 200
-}
+const baseUrl = 'https://blackjack.fuzz.me.uk';
+const endpointSit = 'sit';
+const endpointDeal = 'deal';
+const endpointTurn = 'turn';
+const endpointStand = 'stand';
 
 
 app.use(bodyParser.json())
 
 
+app.post("/api/sit", (request, response) => {    
+    let innerRequest = fetch(`${baseUrl}/${endpointSit}`, {
+        method: "post",
+        body: JSON.stringify(request.body),
+        headers: { "Content-Type": "application/json" }
+    })
+        .then(res => res.json())        
+        .catch(err => console.log(err))
 
-app.post("/api/sit", cors(corsOptions), (request, response) => {
-    // console.log('req.body ' + req.body);
-    // fetch("https://blackjack.fuzz.me.uk/sit", {
-    //     method: "post",
-    //     body: JSON.stringify(request.body),
-    //     headers: { "Content-Type": "application/json" }
-    // })
-    //     .then(res => response= res.json())
-    //     .then(json => console.log(json))
-    //     .catch(err => console.log(err))
-    request.post({uri: 'https://blackjack.fuzz.me.uk/sit', json: req.body}, function (error, response, body) {
-        if (!error && response.statusCode === 200) {
-            console.log(response.body);
-            res.send(body);
-        }
-    });
-   
-    
+    innerRequest
+    .then(res => response.send(res))
+    .catch(err => response.send(err))  
 });
 
 

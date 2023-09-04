@@ -23,8 +23,7 @@ export class TableComponent implements OnInit {
     this._playerService.sit(this.player.balance);
   }
 
-  ngOnInit(): void {
-    console.log("this._playerService.balance " + this._playerService.balance)
+  ngOnInit(): void {    
     this.player.balance = this._playerService.balance;    
   }
 

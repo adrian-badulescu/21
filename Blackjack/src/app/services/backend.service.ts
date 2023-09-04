@@ -9,10 +9,10 @@ import { Observable } from 'rxjs';
 })
 export class BackendService {
   baseUrl: string = 'http://127.0.0.1:3000/api';
-  sitEndpoint: string  = 'sit'
-  dealEndpoint: string  = 'deal'
-  turnEndpoint: string  = 'turn'
-  standEndpoint: string  = 'stand'
+  endpointSit: string  = 'sit'
+  endpointDeal: string  = 'deal'
+  endpointTurn: string  = 'turn'
+  endpointStand: string  = 'stand'
   
   constructor(private _http: HttpClient) {
     
@@ -21,7 +21,7 @@ export class BackendService {
   sitHttpPost(balance: number): Observable<any> {
     console.log(balance);
     
-    return this._http.post(`${this.baseUrl}/${this.sitEndpoint}`, {"balance": balance})
+    return this._http.post(`${this.baseUrl}/${this.endpointSit}`, {"balance": balance})
   }
 
   dealHttpPost() {
