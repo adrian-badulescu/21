@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ISitHttpBodyRequest } from '../interfaces/http-requests/ISitHttpBodyRequest';
 
 @Injectable({
   providedIn: 'root'

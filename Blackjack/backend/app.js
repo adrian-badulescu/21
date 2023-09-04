@@ -7,12 +7,32 @@ const endpointSit = 'sit';
 const endpointDeal = 'deal';
 const endpointTurn = 'turn';
 const endpointStand = 'stand';
+const corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  }
+
+app.use(cors())
 
 
 app.use(bodyParser.json())
 
 
-app.post("/api/sit", (request, response) => {    
+app.post("/api/sit", cors(corsOptions), (request, response) => {    
+    let innerRequest = fetch(`${baseUrl}/${endpointSit}`, {
+        method: "post",
+        body: JSON.stringify(request.body),
+        headers: { "Content-Type": "application/json" }
+    })
+        .then(res => res.json())        
+        .catch(err => console.log(err))
+
+    innerRequest
+    .then(res => response.send(res))
+    .catch(err => response.send(err))  
+});
+
+app.post("/api/deal", cors(corsOptions), (request, response) => {    
     let innerRequest = fetch(`${baseUrl}/${endpointSit}`, {
         method: "post",
         body: JSON.stringify(request.body),

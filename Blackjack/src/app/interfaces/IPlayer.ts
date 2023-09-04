@@ -1,5 +1,8 @@
+import { ISitHttpBodyRequest } from "./http-requests/ISitHttpBodyRequest";
+import { ISitHttpResponse } from "./http-responses/ISitHttpResponse";
+
 export interface IPlayer {    
-    sit(balance: number): void;
+    sit(balance: ISitHttpBodyRequest): void;
     deal(): void;
     turn(): void;
     stand(): void;

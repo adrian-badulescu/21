@@ -1,5 +1,26 @@
 
-
-<p>Player balance - {{player.balance | json}}</p>
-
-<button (click)="sitOnTable()">Sit</button>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6">
+            <p>Player balance - {{player.balance | json}}</p>
+            <p>Player round - {{player.balance | json}}</p>
+        </div>
+        <div class="col-lg-4">
+            <button class="btn btn-primary" (click)="sitOnTable()">Sit</button>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Bet</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let bet of player.availableBetOptions">                
+                <td>{{bet}} <button class="btn btn-primary">Bet</button> </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+</div>
