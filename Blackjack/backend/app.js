@@ -32,7 +32,8 @@ app.post("/api/sit", cors(corsOptions), (request, response) => {
     .catch(err => response.send(err))  
 });
 
-app.post("/api/deal", cors(corsOptions), (request, response) => {    
+app.post("/api/deal", cors(corsOptions), (request, response) => {
+    console.log(request.body)   
     let innerRequest = fetch(`${baseUrl}/${endpointSit}`, {
         method: "post",
         body: JSON.stringify(request.body),

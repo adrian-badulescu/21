@@ -2,8 +2,8 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-6">
-            <p>Player balance - {{player.balance | json}}</p>
-            <p>Player round - {{player.balance | json}}</p>
+            <p>Player balance - {{balance | json}}</p>
+            <p>Player round - {{round | json}}</p>
         </div>
         <div class="col-lg-4">
             <button class="btn btn-primary" (click)="sitOnTable()">Sit</button>
@@ -13,12 +13,12 @@
         <table class="table">
             <thead>
               <tr>
-                <th scope="col">Bet</th>
+                <th scope="col">Available amounts for betting</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let bet of player.availableBetOptions">                
-                <td>{{bet}} <button class="btn btn-primary">Bet</button> </td>
+              <tr *ngFor="let bet of availableBetOptions">                             
+                <td><div class="col-lg-2"></div><button class="btn btn-primary" (click)="deal(bet)">Bet {{bet}}</button></td>
               </tr>
             </tbody>
           </table>

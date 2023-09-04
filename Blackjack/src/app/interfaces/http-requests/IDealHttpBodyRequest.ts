@@ -1,4 +1,5 @@
 export interface IDealHttpBodyRequest {
-    bet: number,
-    sessionId: string
+    bet: number;
+    sessionId: string;
+    balance: number;
 }

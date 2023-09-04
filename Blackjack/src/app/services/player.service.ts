@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { IPlayer, IPlayerObject } from '../interfaces/IPlayer';
+import { IPlayer } from '../interfaces/IPlayer';
 import { BackendService } from './backend.service';
 import { RandomService } from './random.service';
 import { ISitHttpBodyRequest } from '../interfaces/http-requests/ISitHttpBodyRequest';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { ISitHttpResponse } from '../interfaces/http-responses/ISitHttpResponse';
+import { IDealHttpBodyRequest } from '../interfaces/http-requests/IDealHttpBodyRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -31,8 +32,10 @@ export class PlayerService implements IPlayer {
     this._backendService.sitHttpPost(balance).subscribe(result => this._sitResponse$.next(this._sitResponse = result));    
   }
 
-  deal() {
-
+  deal(bet: IDealHttpBodyRequest): void { 
+    console.log(bet);
+       
+    this._backendService.dealHttpPost(bet).subscribe(result => console.log(result));    
   }
 
   turn() {
