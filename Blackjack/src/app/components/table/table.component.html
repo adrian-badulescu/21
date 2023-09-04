@@ -2,12 +2,14 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-6">
-            <p>Player Balance - {{balance | json}}</p>
-            <div *ngIf="dealResponse.roundEnded">
-                <p>Player Round - {{round | json}}</p>
-                <p>Win Amount - {{dealResponse.winAmount | json}}</p>
+            <p>Player Balance - {{balance | json}} $</p>
+            <p>Player Round - {{round | json}}</p>
+            <div *ngIf="dealResponse.roundEnded">                
+                <p>Win Amount - {{dealResponse.winAmount | json}} $</p>
             </div>
-            <button class="btn btn-primary" (click)="sitOnTable()">Sit</button>
+            <button class="btn btn-primary" (click)="sitOnTable()">Sit</button> 
+            <div class="p-2"></div>           
+            <button [disabled]="!dealResponse.roundEnded" class="btn btn-primary">Stand</button>
         </div>        
         <div class="col-lg-4 mt-3">
             <button class="btn btn-success">&nbsp;Hit&nbsp;</button>
@@ -24,7 +26,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let bet of availableBetOptions">                             
-                <td><div class="col-lg-2"></div><button class="btn btn-primary" (click)="deal(bet)">Bet {{bet}}</button></td>
+                <td><div class="col-lg-2"></div><button class="btn btn-primary" (click)="deal(bet)">Bet {{bet}} $</button></td>
               </tr>
             </tbody>
           </table>
