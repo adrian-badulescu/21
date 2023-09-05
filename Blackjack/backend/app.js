@@ -54,7 +54,7 @@ app.post("/api/turn", cors(corsOptions), (request, response) => {
         body: JSON.stringify(request.body),
         headers: { "Content-Type": "application/json" }
     })
-        .then(res => res.json())        
+        .then(res => res.json())              
         .catch(err => console.log(err))
 
     innerRequest

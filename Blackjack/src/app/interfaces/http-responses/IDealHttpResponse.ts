@@ -7,6 +7,6 @@ export interface IDealHttpResponse {
 }
 
 export interface ICards {
-    rank: string;
-    suite: string;
+    rank: string | null;
+    suite: string | null;
 }

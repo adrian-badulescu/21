@@ -1,10 +1,11 @@
 import { IDealHttpBodyRequest } from "./http-requests/IDealHttpBodyRequest";
 import { ISitHttpBodyRequest } from "./http-requests/ISitHttpBodyRequest";
+import { ITurnHttpBodyRequest } from "./http-requests/ITurnHttpBodyRequest";
 
 export interface IPlayer {    
-    sit(balance: ISitHttpBodyRequest): void;
+    sit(payload: ISitHttpBodyRequest): void;
     deal(payload: IDealHttpBodyRequest): void;
-    turn(): void;
+    turn(payload: ITurnHttpBodyRequest): void;
     stand(): void;
 }
 

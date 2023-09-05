@@ -4,7 +4,7 @@
         <div class="col-lg-6">
             <p>Player Balance - {{balance | json}} $</p>
             <p>Player Round - {{round | json}}</p>
-            <div *ngIf="dealResponse.roundEnded">                
+            <div *ngIf="roundEnded">                
                 <p>Win Amount - {{dealResponse.winAmount | json}} $</p>
             </div>
             <button class="btn btn-primary" (click)="sitOnTable()">Sit</button> 
@@ -12,9 +12,9 @@
             <button [disabled]="!dealResponse.roundEnded" class="btn btn-primary">Stand</button>
         </div>        
         <div class="col-lg-4 mt-3">
-            <button class="btn btn-success">&nbsp;Hit&nbsp;</button>
+            <button class="btn btn-success" (click)="turn('hit')">&nbsp;Hit&nbsp;</button>
             <div class="col-lg-2"></div>
-            <button class="btn btn-danger mt-2">Stay</button>
+            <button class="btn btn-danger mt-2" (click)="turn('stay')">Stay</button>
         </div>
     </div>
     <div class="row">
@@ -32,8 +32,8 @@
           </table>
     </div>
     <div class="row">
-        <h3>Dealer Cards {{dealResponse.dealerCards | json}}</h3>
-        <h3>Player Cards {{dealResponse.playerCards | json}}</h3>
-        <h3>Round Completed {{dealResponse.roundEnded | json}}</h3>
+        <h3>Dealer Cards {{dealerCards | json}}</h3>
+        <h3>Player Cards {{playerCards | json}}</h3>
+        <h3>Round Completed {{roundEnded | json}}</h3>
     </div>
 </div>

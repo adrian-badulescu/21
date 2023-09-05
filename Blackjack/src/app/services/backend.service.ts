@@ -7,6 +7,8 @@ import { ISitHttpResponse } from '../interfaces/http-responses/ISitHttpResponse'
 import { IDealHttpResponse } from '../interfaces/http-responses/IDealHttpResponse';
 import { ISitHttpBodyRequest } from '../interfaces/http-requests/ISitHttpBodyRequest';
 import { IDealHttpBodyRequest } from '../interfaces/http-requests/IDealHttpBodyRequest';
+import { ITurnHttpBodyRequest } from '../interfaces/http-requests/ITurnHttpBodyRequest';
+import { ITurnHttpResponse } from '../interfaces/http-responses/ITurnHttpResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +30,9 @@ export class BackendService {
 
   dealHttpPost(bet: IDealHttpBodyRequest): Observable<IDealHttpResponse> {
     return this._http.post<IDealHttpResponse>(`${this.baseUrl}/${this.endpointDeal}`, bet);
+  }
+
+  turnHttpPost(action: ITurnHttpBodyRequest): Observable<ITurnHttpResponse> {
+    return this._http.post<ITurnHttpResponse>(`${this.baseUrl}/${this.endpointTurn}`, action);
   }
 }
