@@ -9,12 +9,16 @@ import { IDealHttpBodyRequest } from '../interfaces/http-requests/IDealHttpBodyR
 import { IDealHttpResponse, ICards } from '../interfaces/http-responses/IDealHttpResponse';
 import { ITurnHttpBodyRequest } from '../interfaces/http-requests/ITurnHttpBodyRequest';
 import { ITurnHttpResponse } from '../interfaces/http-responses/ITurnHttpResponse';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayerService implements IPlayer {
   initialAmountBalanceArray: number[] = [10, 25, 50, 100, 250, 500, 1000];
+  // private _round: number = 0;
+  // private _round$ = new BehaviorSubject(this._round)
+  public round = new Observable();
 
   private _balance: number = 0;
   private _balance$ = new BehaviorSubject(this._balance);
@@ -41,10 +45,25 @@ export class PlayerService implements IPlayer {
     if (card) {
       if (card.rank !== '' && card.suite !== '') {
         cardsArray.push(card)
-      }    
-    }    
+      }
+    }
     return cardsArray;
   }
+
+  // counterRound(roundEnded: boolean) {
+  //   let _round = 0;
+  //   let _round$ = new BehaviorSubject(_round)
+  //   this.round = _round$.asObservable();
+  //   if (roundEnded === true) {
+  //     return {
+  //       increment: () => _round$.next(++_round),
+  //       // getCount: () => _round
+  //     };
+  //   }
+  //   return this.round;
+  // }
+
+
 
   sit(balance: ISitHttpBodyRequest): void {
     this._backendService.sitHttpPost(balance).subscribe(result => this._sitResponse$.next(this._sitResponse = result));
@@ -54,8 +73,8 @@ export class PlayerService implements IPlayer {
     this._backendService.dealHttpPost(bet).subscribe(result => this._dealResponse$.next(this._dealResponse = result));
   }
 
-  turn(action: ITurnHttpBodyRequest): void {   
-    this._backendService.turnHttpPost(action).subscribe(result => {this._turnResponse$.next(this._turnResponse = result), console.log(result)});
+  turn(action: ITurnHttpBodyRequest): void {
+    this._backendService.turnHttpPost(action).subscribe(result => { this._turnResponse$.next(this._turnResponse = result), console.log(result) });
   }
 
   stand() {

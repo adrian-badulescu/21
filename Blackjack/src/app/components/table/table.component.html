@@ -2,14 +2,15 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-6">
-            <p>Player Balance - {{balance | json}} $</p>
-            <p>Player Round - {{round | json}}</p>
+            <p>Player Balance: {{balance | json}} $</p>
+            <p>Player Round: {{round | json}}</p>
             <div *ngIf="roundEnded">                
-                <p>Win Amount - {{dealResponse.winAmount | json}} $</p>
-            </div>
-            <button class="btn btn-primary" (click)="sitOnTable()">Sit</button> 
+                <p>Win Amount: {{winAmount | json}} $</p>
+            </div>            
+                <div class="col-lg-3"><button class="btn btn-primary" (click)="sitOnTable()">Sit</button></div>
+                <div class="col-lg-3"><button class="btn btn-success" (click)="showDealOptions()" [disabled]="toggleDealBtn">Deal</button></div>
             <div class="p-2"></div>           
-            <button [disabled]="!dealResponse.roundEnded" class="btn btn-primary">Stand</button>
+            <button [disabled]="!roundEnded" class="btn btn-primary">Stand</button>
         </div>        
         <div class="col-lg-4 mt-3">
             <button class="btn btn-success" (click)="turn('hit')">&nbsp;Hit&nbsp;</button>
@@ -17,7 +18,7 @@
             <button class="btn btn-danger mt-2" (click)="turn('stay')">Stay</button>
         </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="showAvailableBettingAmount">
         <table class="table">
             <thead>
               <tr>
@@ -32,8 +33,8 @@
           </table>
     </div>
     <div class="row">
-        <h3>Dealer Cards {{dealerCards | json}}</h3>
-        <h3>Player Cards {{playerCards | json}}</h3>
-        <h3>Round Completed {{roundEnded | json}}</h3>
+        <p>Dealer Cards {{dealerCards | json}}</p>
+        <p>Player Cards {{playerCards | json}}</p>
+        <p>Round Completed {{roundEnded | json}}</p>
     </div>
 </div>
