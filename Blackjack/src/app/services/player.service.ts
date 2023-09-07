@@ -6,19 +6,20 @@ import { ISitHttpBodyRequest } from '../interfaces/http-requests/ISitHttpBodyReq
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { ISitHttpResponse } from '../interfaces/http-responses/ISitHttpResponse';
 import { IDealHttpBodyRequest } from '../interfaces/http-requests/IDealHttpBodyRequest';
-import { IDealHttpResponse, ICards } from '../interfaces/http-responses/IDealHttpResponse';
+import { IDealHttpResponse } from '../interfaces/http-responses/IDealHttpResponse';
+import { ICards } from '../interfaces/http-responses/ICards'
 import { ITurnHttpBodyRequest } from '../interfaces/http-requests/ITurnHttpBodyRequest';
 import { ITurnHttpResponse } from '../interfaces/http-responses/ITurnHttpResponse';
-import { Observable } from 'rxjs';
+import { IStandHttpBodyRequest } from '../interfaces/http-requests/IStandHttpBodyRequest';
+import { IStandHttpResponse } from '../interfaces/http-responses/IStandHttpResponse';
+import { IErrorHttpResponse } from '../interfaces/http-responses/IErrorHttpResponse';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayerService implements IPlayer {
   initialAmountBalanceArray: number[] = [10, 25, 50, 100, 250, 500, 1000];
-  // private _round: number = 0;
-  // private _round$ = new BehaviorSubject(this._round)
-  public round = new Observable();
+
 
   private _balance: number = 0;
   private _balance$ = new BehaviorSubject(this._balance);
@@ -36,6 +37,13 @@ export class PlayerService implements IPlayer {
   private _turnResponse$ = new BehaviorSubject(this._turnResponse);
   public turnResponse = this._turnResponse$.asObservable();
 
+  private _standResponse: IStandHttpResponse = { roundsPlayed: 0, winAmount: 0 };
+  private _standResponse$ = new BehaviorSubject(this._standResponse);
+  public standResponse = this._standResponse$.asObservable();
+
+ 
+
+
   constructor(private _backendService: BackendService, private _randomService: RandomService) {
     this._balance = _randomService.setRandomInitialAmount(this.initialAmountBalanceArray);
     this._balance$.next(this._balance);
@@ -50,20 +58,9 @@ export class PlayerService implements IPlayer {
     return cardsArray;
   }
 
-  // counterRound(roundEnded: boolean) {
-  //   let _round = 0;
-  //   let _round$ = new BehaviorSubject(_round)
-  //   this.round = _round$.asObservable();
-  //   if (roundEnded === true) {
-  //     return {
-  //       increment: () => _round$.next(++_round),
-  //       // getCount: () => _round
-  //     };
-  //   }
-  //   return this.round;
-  // }
-
-
+  clearSession() {
+    this._sitResponse$.next({availableBetOptions: [], sessionId: '' })
+  }
 
   sit(balance: ISitHttpBodyRequest): void {
     this._backendService.sitHttpPost(balance).subscribe(result => this._sitResponse$.next(this._sitResponse = result));
@@ -74,13 +71,11 @@ export class PlayerService implements IPlayer {
   }
 
   turn(action: ITurnHttpBodyRequest): void {
-    this._backendService.turnHttpPost(action).subscribe(result => { this._turnResponse$.next(this._turnResponse = result), console.log(result) });
+    this._backendService.turnHttpPost(action).subscribe(result =>  this._turnResponse$.next(this._turnResponse = result));
   }
 
-  stand() {
-
+  stand(sessionId: IStandHttpBodyRequest): void {    
+    this._backendService.standHttpPost(sessionId).subscribe(result =>  this._standResponse$.next(this._standResponse = result));    
   }
-
-
 
 }

@@ -16,10 +16,14 @@ export class RoundsCounterInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {    
     return next.handle(request).pipe(tap(evt => {
-      if (evt instanceof HttpResponse) {        
-          console.log(evt.body.roundEnded)
-          this.roundCounter.increment(evt.body.roundEnded);        
-      }
+      // if (evt instanceof HttpResponse) {  
+      //   const body = evt.body;
+      //     if(body.hasOwnProperty('roundEnded') && body.roundEnded === true) {
+      //       this.roundCounter.increment(body.roundEnded);
+      //     }                   
+      // }
+    }, err => {
+      console.log(err)
     }));
   }
 }

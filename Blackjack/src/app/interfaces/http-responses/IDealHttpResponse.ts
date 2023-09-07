@@ -1,3 +1,6 @@
+import { ICards } from "./ICards";
+export { ICards } from "./ICards";
+
 export interface IDealHttpResponse {
     dealerCards: ICards[];
     playerCards: ICards[];
@@ -6,7 +9,4 @@ export interface IDealHttpResponse {
     currentBalance: number;
 }
 
-export interface ICards {
-    rank: string | null;
-    suite: string | null;
-}
+

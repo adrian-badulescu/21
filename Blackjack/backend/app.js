@@ -32,8 +32,7 @@ app.post("/api/sit", cors(corsOptions), (request, response) => {
     .catch(err => response.send(err))  
 });
 
-app.post("/api/deal", cors(corsOptions), (request, response) => {
-    console.log(request.body)   
+app.post("/api/deal", cors(corsOptions), (request, response) => {    
     let innerRequest = fetch(`${baseUrl}/${endpointDeal}`, {
         method: "post",
         body: JSON.stringify(request.body),
@@ -47,8 +46,7 @@ app.post("/api/deal", cors(corsOptions), (request, response) => {
     .catch(err => response.send(err))  
 });
 
-app.post("/api/turn", cors(corsOptions), (request, response) => {
-    console.log(request.body)   
+app.post("/api/turn", cors(corsOptions), (request, response) => {     
     let innerRequest = fetch(`${baseUrl}/${endpointTurn}`, {
         method: "post",
         body: JSON.stringify(request.body),
@@ -62,8 +60,7 @@ app.post("/api/turn", cors(corsOptions), (request, response) => {
     .catch(err => response.send(err))  
 });
 
-app.post("/api/stand", cors(corsOptions), (request, response) => {
-    console.log(request.body)   
+app.post("/api/stand", cors(corsOptions), (request, response) => {      
     let innerRequest = fetch(`${baseUrl}/${endpointStand}`, {
         method: "post",
         body: JSON.stringify(request.body),

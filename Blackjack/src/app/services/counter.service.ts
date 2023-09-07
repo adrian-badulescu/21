@@ -5,8 +5,9 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class CounterService {
-
-  private _count: BehaviorSubject<number> = new BehaviorSubject(0);
+  private _round: number = 0;
+  private _round$: BehaviorSubject<number> = new BehaviorSubject(this._round);
+  public round = this._round$.asObservable();
 
   constructor() {    
   }
@@ -14,18 +15,12 @@ export class CounterService {
   increment(round: any) {    
     console.log(round)
       if(round === true) {
-        this._count.next(this._count.value + 1);
-      }
-    
-    return this._count.value;    
+        this._round$.next(this._round$.value + 1);
+      }    
+    return this._round$.value;    
   }
 
-  get count() {
-    return this._count.asObservable();
-  }
+
 }
 
 
-interface IRequestWithRoundEnded {
-  [key:string]: boolean
-}

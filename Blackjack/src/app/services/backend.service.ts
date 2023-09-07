@@ -9,6 +9,8 @@ import { ISitHttpBodyRequest } from '../interfaces/http-requests/ISitHttpBodyReq
 import { IDealHttpBodyRequest } from '../interfaces/http-requests/IDealHttpBodyRequest';
 import { ITurnHttpBodyRequest } from '../interfaces/http-requests/ITurnHttpBodyRequest';
 import { ITurnHttpResponse } from '../interfaces/http-responses/ITurnHttpResponse';
+import { IStandHttpBodyRequest } from '../interfaces/http-requests/IStandHttpBodyRequest';
+import { IStandHttpResponse } from '../interfaces/http-responses/IStandHttpResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +36,9 @@ export class BackendService {
 
   turnHttpPost(action: ITurnHttpBodyRequest): Observable<ITurnHttpResponse> {
     return this._http.post<ITurnHttpResponse>(`${this.baseUrl}/${this.endpointTurn}`, action);
+  }
+
+  standHttpPost(sessionId: IStandHttpBodyRequest): Observable<IStandHttpResponse> {
+    return this._http.post<IStandHttpResponse>(`${this.baseUrl}/${this.endpointStand}`, sessionId);
   }
 }
