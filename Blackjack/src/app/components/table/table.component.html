@@ -7,8 +7,7 @@
             </div>
             <p>Player Balance: {{balance | json}} $</p>            
             <div *ngIf="showResults">   
-              <p>You played: {{round | json}} rounds</p>             
-                <p>You won: {{winAmount | json}} $</p>
+              <p>You played: {{round | json}} rounds</p>                 
             </div>            
                 <div class="col-lg-3"><button class="btn btn-primary" (click)="sitOnTable()">Sit</button></div>
                 <div class="col-lg-3"><button class="btn btn-success" (click)="showDealOptions()" [disabled]="toggleDealBtn">Deal</button></div>
@@ -16,9 +15,9 @@
             <button [disabled]="!roundEnded" class="btn btn-primary" (click)="stand()">Stand</button>
         </div>        
         <div class="col-lg-4 mt-3">
-            <button class="btn btn-success" (click)="turn('hit')">&nbsp;Hit&nbsp;</button>
+            <button class="btn btn-success" (click)="turn('hit')" [disabled]="!roundEnded && !showCards">&nbsp;Hit&nbsp;</button>
             <div class="col-lg-2"></div>
-            <button class="btn btn-danger mt-2" (click)="turn('stay')">Stay</button>
+            <button class="btn btn-danger mt-2" (click)="turn('stay')" [disabled]="!roundEnded && !showCards">Stay</button>
         </div>
     </div>
     <div class="row" *ngIf="showAvailableBettingAmount">
@@ -35,9 +34,13 @@
             </tbody>
           </table>
     </div>
-    <div class="row" *ngIf="showCards">
+    <div class="row" *ngIf="!roundEnded">
         <p>Dealer Cards {{dealerCards | json}}</p>
-        <p>Player Cards {{playerCards | json}}</p>
-        <p>Round Completed {{roundEnded | json}}</p>
+        <p>Player Cards {{playerCards | json}}</p>       
     </div>
+    <div *ngIf="roundEnded">
+      <p>{{(winAmount < 0) ? "you lost" : "you win"}} {{lossToAbs(winAmount)}}</p>
+    </div>
+
+    <p>Round Completed {{roundEnded | json}}</p>
 </div>

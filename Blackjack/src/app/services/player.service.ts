@@ -13,17 +13,18 @@ import { ITurnHttpResponse } from '../interfaces/http-responses/ITurnHttpRespons
 import { IStandHttpBodyRequest } from '../interfaces/http-requests/IStandHttpBodyRequest';
 import { IStandHttpResponse } from '../interfaces/http-responses/IStandHttpResponse';
 import { IErrorHttpResponse } from '../interfaces/http-responses/IErrorHttpResponse';
+import { NumberValueAccessor } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayerService implements IPlayer {
-  initialAmountBalanceArray: number[] = [10, 25, 50, 100, 250, 500, 1000];
+
 
 
   private _balance: number = 0;
-  private _balance$ = new BehaviorSubject(this._balance);
-  public balance$ = this._balance$.asObservable();
+  // private _balance$ = new BehaviorSubject(this._balance);
+  // public balance$ = this._balance$.asObservable();
 
   private _sitResponse: ISitHttpResponse = { availableBetOptions: [], sessionId: '' };
   private _sitResponse$ = new BehaviorSubject(this._sitResponse);
@@ -41,12 +42,11 @@ export class PlayerService implements IPlayer {
   private _standResponse$ = new BehaviorSubject(this._standResponse);
   public standResponse = this._standResponse$.asObservable();
 
- 
+
 
 
   constructor(private _backendService: BackendService, private _randomService: RandomService) {
-    this._balance = _randomService.setRandomInitialAmount(this.initialAmountBalanceArray);
-    this._balance$.next(this._balance);
+    _randomService.getRandomInitialAmount().subscribe(balance => this._balance = balance);
   }
 
   checkIfCardIsNull(card: ICards | null, cardsArray: ICards[]): ICards[] {
@@ -59,8 +59,17 @@ export class PlayerService implements IPlayer {
   }
 
   clearSession() {
-    this._sitResponse$.next({availableBetOptions: [], sessionId: '' })
+    this._sitResponse$.next({ availableBetOptions: [], sessionId: '' })
   }
+
+  setBettingOptions(balance: number, availableBetOptions: number[]): number[] {
+    let maxValueAvailableBetOptions = Math.max(...availableBetOptions);
+    if (balance < maxValueAvailableBetOptions) {
+      this._sitResponse.availableBetOptions.pop();
+    }
+    return availableBetOptions;
+  }
+
 
   sit(balance: ISitHttpBodyRequest): void {
     this._backendService.sitHttpPost(balance).subscribe(result => this._sitResponse$.next(this._sitResponse = result));
@@ -71,11 +80,11 @@ export class PlayerService implements IPlayer {
   }
 
   turn(action: ITurnHttpBodyRequest): void {
-    this._backendService.turnHttpPost(action).subscribe(result =>  this._turnResponse$.next(this._turnResponse = result));
+    this._backendService.turnHttpPost(action).subscribe(result => this._turnResponse$.next(this._turnResponse = result));
   }
 
-  stand(sessionId: IStandHttpBodyRequest): void {    
-    this._backendService.standHttpPost(sessionId).subscribe(result =>  this._standResponse$.next(this._standResponse = result));    
+  stand(sessionId: IStandHttpBodyRequest): void {
+    this._backendService.standHttpPost(sessionId).subscribe(result => this._standResponse$.next(this._standResponse = result));
   }
 
 }
